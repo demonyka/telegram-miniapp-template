@@ -14,8 +14,7 @@
         "tightenco/ziggy": "^2.0",
         "laravel/horizon": "^5.30",
         "intervention/image": "^3.11",
-        "ext-fileinfo": "*",
-
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
