@@ -43,6 +43,10 @@ docker-compose exec app npm run build
 ```bash
 docker-compose exec nginx certbot --nginx
 ```
+### Set Telegram Webhook
+```bash
+docker-compose exec app php artisan telegram:set-webhook
+```
 
 ## Usage
 Project - `http(s)://your_domain.com`\
