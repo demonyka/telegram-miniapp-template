@@ -28,6 +28,10 @@ docker-compose exec app chmod 775 -R storage
 ```bash
 docker-compose exec app php artisan key:generate
 ```
+### Migrate database
+```bash
+docker-compose exec app php artisan migrate
+```
 ### Install Node.js dependencies and build the frontend
 ```bash
 docker-compose exec app npm install

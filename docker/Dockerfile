@@ -2,6 +2,8 @@ FROM php:8.2-fpm
 
 # Установка системных зависимостей и необходимых библиотек
 RUN apt-get update && apt-get install -y \
+    cron \
+    supervisor \
     build-essential \
     libpng-dev \
     libjpeg62-turbo-dev \
@@ -16,6 +18,10 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libzip-dev \
     libonig-dev \
+    libz-dev \
+    libssl-dev \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl bcmath gd zip
 
@@ -31,4 +37,16 @@ WORKDIR /var/www/html
 # Копирование и установка зависимостей
 COPY . /var/www/html
 
-CMD ["php-fpm"]
+COPY ./docker/php.ini /usr/local/etc/php/
+
+# Копируем cron-задачу в контейнер
+COPY cron /etc/cron.d/laravel-cron
+
+# Устанавливаем права доступа для cron-задачи
+RUN chmod 0644 /etc/cron.d/laravel-cron
+
+# Запускаем cron-демон в фоновом режиме
+RUN crontab /etc/cron.d/laravel-cron
+
+# Запускаем cron-демон и php-fpm
+CMD ["/usr/bin/supervisord"]

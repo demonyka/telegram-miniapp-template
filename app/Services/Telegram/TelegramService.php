@@ -39,14 +39,14 @@ class TelegramService
             ['telegram_id' => $telegramId],
             [
                 'telegram_id' => $telegramId,
-                'telegram_data' => json_encode($telegramUser),
+                'telegram_data' => $telegramUser,
             ]
         );
 
         if (auth()->check() && auth()->user()->telegram_id !== $telegramId) {
             Auth::logout();
         }
-        $user->telegram_data = json_encode($telegramUser);
+        $user->telegram_data = $telegramUser;
         $user->save();
         Auth::login($user);
     }

@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Home\HomeController;
-use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Telegram\TelegramController;
 use App\Http\Controllers\Telegram\WebhookController;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +21,8 @@ Route::prefix('/telegram')->group(function () {
 });
 
 Route::prefix('/webapp')->group(function () {
-    Route::get('/', [IndexController::class, 'index'])->name('webapp.index');
+    Route::inertia('/', 'Index')->name('webapp.index');
     Route::middleware(['verify.telegram.data'])->group(function () {
-       Route::get('/home', [HomeController::class, 'view'])->name('webapp.home');
+       Route::inertia('/home', 'Home/Home')->name('webapp.home');
     });
 });

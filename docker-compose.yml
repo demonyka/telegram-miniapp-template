@@ -15,10 +15,14 @@ services:
             - DB_DATABASE=${DB_DATABASE}
             - DB_USERNAME=${DB_USERNAME}
             - DB_PASSWORD=${DB_PASSWORD}
+            - REDIS_HOST=${REDIS_HOST}
+            - REDIS_PORT=${REDIS_PORT}
+            - QUEUE_CONNECTION=${QUEUE_CONNECTION}
         volumes:
             - ./:/var/www/html
         depends_on:
             - db
+            - redis
         networks:
             - laravel
 
@@ -43,6 +47,8 @@ services:
         volumes:
             - ./docker/nginx/templates:/etc/nginx/templates
             - ./:/var/www/html
+            - letsencrypt:/etc/letsencrypt
+            - letsencrypt-lib:/var/lib/letsencrypt
         environment:
             - NGINX_HOST=${NGINX_HOST}
         depends_on:
@@ -64,8 +70,18 @@ services:
         networks:
             - laravel
 
+    redis:
+        image: redis:alpine
+        volumes:
+            - redisdata:/data
+        networks:
+            - laravel
+
 volumes:
+    letsencrypt:
+    letsencrypt-lib:
     pgdata:
+    redisdata:
 
 networks:
     laravel:

@@ -10,9 +10,12 @@
         "inertiajs/inertia-laravel": "^0.6.8",
         "irazasyed/telegram-bot-sdk": "^3.14",
         "laravel/framework": "^10.0",
-        "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "tightenco/ziggy": "^2.0"
+        "tightenco/ziggy": "^2.0",
+        "laravel/horizon": "^5.30",
+        "intervention/image": "^3.11",
+        "ext-fileinfo": "*",
+
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

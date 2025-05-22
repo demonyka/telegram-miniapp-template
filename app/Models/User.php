@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $telegram_id
- * @property string $telegram_data
+ * @property array $telegram_data
  */
 class User extends Authenticatable
 {
@@ -30,21 +30,22 @@ class User extends Authenticatable
         'lastname'
     ];
 
+    protected $casts = [
+        'telegram_data' => 'array',
+    ];
+
     public function getUsernameAttribute()
     {
-        $telegramData = json_decode($this->telegram_data, true);
-        return $telegramData['username'] ?? '';
+        return $this->telegram_data['username'] ?? '';
     }
 
     public function getFirstnameAttribute(): string
     {
-        $telegramData = json_decode($this->telegram_data, true);
-        return $telegramData['first_name'] ?? '';
+        return $this->telegram_data['first_name'] ?? '';
     }
 
     public function getLastnameAttribute(): string
     {
-        $telegramData = json_decode($this->telegram_data, true);
-        return $telegramData['last_name'] ?? '';
+        return $this->telegram_data['last_name'] ?? '';
     }
 }
